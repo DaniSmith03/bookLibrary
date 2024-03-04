@@ -3,6 +3,7 @@ import { Book } from '../models/bookModel.js';
 import mongoose from 'mongoose';
 
 const booksRoute = express.Router();
+
 //POST request for sign up page. Create new book
 booksRoute.post('/add-book', async (request, response) => {
   try {
@@ -30,6 +31,7 @@ booksRoute.post('/add-book', async (request, response) => {
     response.status(500).send({ message: error.message });
   }
 });
+
 //get all books
 booksRoute.get('/', async (request, response) => {
   try {

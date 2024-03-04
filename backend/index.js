@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import { PORT, MongoDBURI } from './config.js';
 import usersRoute from './routes/userRoutes.js';
 import booksRoute from './routes/bookRoutes.js';
+import libraryRoute from './routes/libraryRoutes.js';
 
 const app = express();
 //MiddleWare for parsing the request body
@@ -21,7 +22,7 @@ app.use(cors());
 //Routes for Models
 app.use('/users', usersRoute);
 app.use('/books', booksRoute);
-
+app.use('/library', libraryRoute);
 //connect to server only if MongoDB connection has been established
 //GET home page once connected to the server.
 mongoose
