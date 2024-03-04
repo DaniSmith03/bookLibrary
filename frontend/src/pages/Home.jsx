@@ -18,7 +18,7 @@ const Home = () => {
         setBooks(response.data.data);
         setLoading(false);
         console.log(books);
-        books.map((item) => console.log(item.title));
+        response.data.data.map((item) => console.log(item.title));
       })
       .catch((error) => {
         console.log(error);
@@ -42,9 +42,14 @@ const Home = () => {
       ) : (
         <div className='grid grid-cols-3 gap-4'>
           {books.map((item) => (
-            <div key={item._id}>
-              <h3>{item.title}</h3>
-            </div>
+            <Link to={`/books/details/${item._id}`}>
+              <div
+                className=' container sm flex flex-col items-center border-solid border-4 border-emerald-500 rounded-lg'
+                key={item._id}
+              >
+                <h3>{item.title}</h3>
+              </div>
+            </Link>
           ))}
         </div>
       )}
