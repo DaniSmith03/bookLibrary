@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Router, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import AddUser from './pages/AddUser';
 import GetUser from './pages/GetUser';
@@ -9,6 +9,8 @@ import AddBook from './pages/AddBook';
 import DeleteBook from './pages/DeleteBook';
 import EditBook from './pages/EditBook';
 import GetBook from './pages/GetBook';
+import NavBar from './components/NavBar';
+import SignIn from './pages/SignIn';
 const App = () => {
   return (
     <Routes>
@@ -22,6 +24,8 @@ const App = () => {
       <Route path='/books/details/:id' element={<GetBook />} />
       <Route path='/books/edit/:id' element={<EditBook />} />
       <Route path='/books/delete/' element={<DeleteBook />} />
+
+      <Route path='/signIn' element={<SignIn />} />
     </Routes>
   );
 };
