@@ -3,12 +3,16 @@ import axios from 'axios';
 import Spinner from '../components/Spinner'; // Ensure this exists or remove the import
 // import { Link, useParams } from 'react-router-dom'; // Not needed unless you're using them
 import '../app.css';
+import { Link, useNavigate } from 'react-router-dom';
+import BookDetails from './BookDetails';
 
 const AddBook = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState('talia+hibbert');
+
+  const navigate = useNavigate();
 
   // Fetch the books whenever the query changes
   useEffect(() => {
@@ -82,12 +86,24 @@ const AddBook = () => {
       {loading && <Spinner />}
 
       {/* Display books in a grid if not loading */}
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6'>
         {books.length > 0
           ? books.map((book, index) => (
-              <div key={index} className='bg-white p-4 rounded-lg shadow-lg'>
+              <div
+                key={index}
+                className='relative bg-white p-4 rounded-lg shadow-lg flex flex-col group'
+                onClick={() =>
+                  navigate(`/search/details/${book.isbn}`, { state: { book } })
+                }
+              >
+                <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg'>
+                  <button className='bg-green-500 text-white text-2xl p-4 rounded-full hover:bg-green-600'>
+                    +
+                  </button>
+                </div>
+
                 {/* Container to hold title and author, fixed height */}
-                <div className='h-24 flex flex-col justify-between'>
+                <div className='h-24 flex flex-col justify-center self-center'>
                   <h3 className='text-lg font-bold mb-2'>{book.title}</h3>
                   <p className='text-gray-700 mb-2'>Author: {book.author}</p>
                 </div>
@@ -97,10 +113,10 @@ const AddBook = () => {
                   <img
                     src={book.cover}
                     alt={`${book.title} cover`}
-                    className='w-full h-64 object-cover'
+                    className='w-40 h-64 object-fit self-center'
                   />
                 ) : (
-                  <div className='w-full h-64 flex items-center justify-center bg-gray-200 text-gray-500'>
+                  <div className='w-40 h-64 flex items-center justify-center self-center bg-gray-200 text-gray-500'>
                     No image
                   </div>
                 )}

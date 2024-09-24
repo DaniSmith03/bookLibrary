@@ -11,6 +11,7 @@ import EditBook from './pages/EditBook';
 import GetBook from './pages/GetBook';
 import NavBar from './components/NavBar';
 import SignIn from './pages/SignIn';
+import BookDetails from './pages/BookDetails';
 const App = () => {
   return (
     <Routes>
@@ -24,6 +25,8 @@ const App = () => {
       <Route path='/books/details/:id' element={<GetBook />} />
       <Route path='/books/edit/:id' element={<EditBook />} />
       <Route path='/books/delete/' element={<DeleteBook />} />
+
+      <Route path='/search/details/:isbn' element={<BookDetails />} />
 
       <Route path='/signIn' element={<SignIn />} />
     </Routes>
