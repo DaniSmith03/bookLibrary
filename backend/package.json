@@ -17,6 +17,7 @@
     "express": "^4.18.2",
     "mongoose": "^8.0.3",
     "node-fetch": "^3.3.2",
+    "npm-check-updates": "^17.1.1",
     "react-router-dom": "^6.21.1"
   }
 }

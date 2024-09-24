@@ -68,4 +68,58 @@ libraryRoute.get('/search-book/:query', async (request, response) => {
   }
 });
 
+//Book Details
+libraryRoute.get('/search-book/details/:isbn', async (request, response) => {
+  try {
+    const { isbn } = request.params; // Changed to fetch the isbn from params
+    const apiResponse = await fetch(
+      `https://openlibrary.org/search.json?q=${isbn}`
+    );
+    const searchData = await apiResponse.json();
+
+    // Retrieve the first result from searchData.docs
+    const firstBook = searchData.docs[0];
+    console.log(firstBook);
+
+    if (!firstBook) {
+      return response.status(404).json({ message: 'Book not found' });
+    }
+
+    // Extract relevant information from the firstBook object
+    const title = firstBook.title || 'Title not found';
+    const isbnCode = firstBook.isbn ? firstBook.isbn[0] : 'ISBN not found';
+    const publisher = firstBook.publisher
+      ? firstBook.publisher[0]
+      : 'Publisher not found';
+    const author = firstBook.author_name
+      ? firstBook.author_name[0]
+      : 'Author not found';
+    const genre = firstBook.subject || 'Genre not found';
+    const cover = firstBook.cover_i
+      ? `https://covers.openlibrary.org/b/id/${firstBook.cover_i}.jpg`
+      : 'No image available';
+
+    // Construct the book object with the retrieved data
+    const bookObj = {
+      title: title,
+      author: author,
+      cover: cover,
+      isbn: isbnCode,
+      // publisher: publisher,
+      // genre: genre,
+      // description: firstBook.description
+      //   ? firstBook.description.value
+      //   : 'No description available',
+    };
+
+    console.log(bookObj);
+
+    // Return the first book's details
+    response.status(200).json(bookObj);
+  } catch (error) {
+    console.error(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
+
 export default libraryRoute;
